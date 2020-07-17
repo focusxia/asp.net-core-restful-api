@@ -31,12 +31,6 @@ namespace DotnetRestFulWebApi.Helper
                 var msg = "";
                 switch (statusCode)
                 {
-                    case 400:
-                        msg = "请求参数错误";
-                        break;
-                    case 401:
-                        msg = "需要授权";
-                        break;
                     case 403:
                         msg = "未授权";
                         break;
@@ -58,7 +52,7 @@ namespace DotnetRestFulWebApi.Helper
         }
         private static Task HandleExceptionAsync(HttpContext httpContext,int statusCode, string msg)
         {
-            httpContext.Response.ContentType = "application/json;charset=utf-8";
+            httpContext.Response.ContentType = "application/problem+json";
             return httpContext.Response.WriteAsync(new ErrorDetail()
             {
                 StatusCode = statusCode,

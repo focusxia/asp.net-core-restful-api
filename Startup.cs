@@ -29,28 +29,24 @@ namespace DotnetRestFulWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-                //.ConfigureApiBehaviorOptions(setup =>
-                // {
-                //     setup.InvalidModelStateResponseFactory = context =>
-                //     {
-                //         var problemDetails = new ValidationProblemDetails(context.ModelState)
-                //         {
-                //             Type = "http://www.baidu.com",
-                //             Title = "ÓÐ´íÎó£¡£¡£¡",
-                //             Status = StatusCodes.Status422UnprocessableEntity,
-                //             Detail = "Çë¿´ÏêÏ¸ÐÅÏ¢",
-                //             Instance = context.HttpContext.Request.Path
-                //         };
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(setup =>
+                 {
+                     setup.InvalidModelStateResponseFactory = context =>
+                     {
+                         var problemDetails = new ErrorDetail()
+                         {
+                             StatusCode = StatusCodes.Status422UnprocessableEntity,
+                             Massage = "²ÎÊý´íÎó"
+                         };
 
-                //         problemDetails.Extensions.Add("traceId", context.HttpContext.TraceIdentifier);
+                         return new UnprocessableEntityObjectResult(problemDetails)
+                         {
+                             ContentTypes = { "application/problem+json" }
+                         };
+                     };
+                 });
 
-                //         return new UnprocessableEntityObjectResult(problemDetails)
-                //         {
-                //             ContentTypes = { "application/problem+json" }
-                //         };
-                //     };
-                // });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<FutrueContext>();
             services.AddTransient<IRoleRepository, RoleRepository>();

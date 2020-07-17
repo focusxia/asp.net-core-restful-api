@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotnetRestFulWebApi.Entities;
 using DotnetRestFulWebApi.Models;
 using DotnetRestFulWebApi.Services;
+using KNet.Data.KBaseClient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotnetRestFulWebApi.Controllers
@@ -23,6 +25,7 @@ namespace DotnetRestFulWebApi.Controllers
         }
 
         [HttpGet]
+        [Route("{userId}")]
         public async Task<IActionResult> GetUser(Guid userId)
         {
             var user = await _userRepository.Get(userId);

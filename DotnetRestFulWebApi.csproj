@@ -15,5 +15,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="KNet.Data.KBaseClient">
+      <HintPath>KNet.Data.KBaseClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 </Project>
